@@ -23,6 +23,11 @@ jobs:
        registry: ghcr.io
        username: ${{ github.actor}} #Récupération de mon pseudo
        password: ${{ secrets.GITHUB_TOKEN}} #Jeton éphémère
+
+    - name: Préparation du nom de l'image en minuscule
+      #Met en minuscule le nom du repo et le stocke dans une variable d'environnement GitHub
+      run: |
+        echo "REPO=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
    
     - name: Construction et publication
       uses: docker/build-push-action@v5
@@ -30,5 +35,5 @@ jobs:
        context: . #Prends le dockerfile dans le dossier actuel
        push: true #Publie l'image une fois terminée
        tags: | #Création d'une liste de tags
-        ghcr.io/${{ github.repository }}:latest
-        ghcr.io/${{ github.repository}}:${{ github.sha }}
+        ghcr.io/${{ env.REPO }}:latest
+        ghcr.io/${{ env.REPO }}:${{ github.sha }}
