@@ -1,7 +1,7 @@
 name: Build & Push Docker Image
 
 on:
- psuh:
+ push:
   branches:
    - main
 
@@ -22,7 +22,7 @@ jobs:
      with:
       registry: ghcr.io
       username: ${{ github.actor}} #Récupération de mon pseudo
-      password: ${{ secrets.GITHUB_TOEKN}} #Jeton éphémère
+      password: ${{ secrets.GITHUB_TOKEN}} #Jeton éphémère
    
    - name: Construction et publication
      uses: docker/build-push-action@v5
